@@ -56,7 +56,7 @@ stages:
 
     - task: AzureWebApp@1
       inputs:
-        azureSubscription: 'Resource Manager - Tailspin - Space Game'
+        azureSubscription: 'tailspin-space-game'
         appName: 'tailspin-space-game-web-dev-5120'
         package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
         resourceGroupName: 'tailspin-space-game-rg'
