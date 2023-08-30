@@ -1,0 +1,64 @@
+parameters:
+- name: subscriptionId
+  type: string
+  default: 'f3365460-b265-4b58-b696-2d5c99a6235f'
+  displayName: 'Azure Subscription ID'
+- name: location
+  type: string
+  default: 'East US'
+  displayName: 'Azure Region'
+- name: openAIdeploymentName
+  type: string
+  default: 'testado'
+  displayName: 'OpenAI Service Name'
+- name: openAISku
+  type: string
+  default: 'S0'
+  displayName: 'OpenAI SKU'
+- name: subscriptionName
+  type: string
+  default: 'Resource Manager - Tailspin - Space Game'
+  displayName: service connection name
+
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+stages:
+- stage: DeployAppSvc
+  displayName: 'Deploy Flask App service'
+  jobs:
+  - job: DeployApp
+    displayName: 'Deploy App service'
+    steps:
+    - task: UsePythonVersion@0
+      inputs:
+        versionSpec: '3.11'
+      displayName: 'Set up Python version 3.11'
+    - script: |
+        python -m venv antenv
+        source antenv/bin/activate
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        python -m spacy download en_core_web_sm
+      displayName: 'Install dependencies'
+
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(System.DefaultWorkingDirectory)/service_selector'
+        includeRootFolder: false
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
+      displayName: 'Archive files'
+
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: 'Resource Manager - Tailspin - Space Game'
+        appName: 'tailspin-space-game-web-dev-5120'
+        package: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        resourceGroupName: 'tailspin-space-game-rg'
+        runtimeStack: 'PYTHON|3.11'
+        startUpCommand: 'gunicorn --bind=0.0.0.0 --workers=4 startup:app'
