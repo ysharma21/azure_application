@@ -62,8 +62,3 @@ stages:
         resourceGroupName: 'tailspin-space-game-rg'
         runtimeStack: 'PYTHON|3.11'
         startUpCommand: 'gunicorn --bind=0.0.0.0 --workers=4 startup:app'
-        appSettings: >
-            OPENAI_API_BASE=https://cog-hnrzvc7tjergs.openai.azure.com/
-            OPENAI_API_VERSION=2023-07-01-preview
-            OPENAI_API_TYPE=azure
-      displayName: 'Deploy to Azure Web App'
