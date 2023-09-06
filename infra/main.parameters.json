@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "environmentName": {
+      "value": "${AZURE_ENV_NAME}"
+    },
+    "resourceGroupName": {
+      "value":"rg-service-selector-dev2"
+    },
+    "location": {
+      "value": "eastus"
+    },
+    "principalId": {
+      "value": "5b4e3f3f-7540-4577-97ec-0a9f1d4119ab"
+    },
+    "storageAccountName": {
+      "value": "sthnrzvc7tjergs"
+    },
+    "storageResourceGroupName": {
+      "value": "rg-service-selector-dev2"
+    },
+    "openAiServiceName": {
+      "value": "cog-hnrzvc7tjergs"
+    },
+    "openAiResourceGroupName": {
+      "value": "rg-service-selector-dev2"
+    },
+    "openAiSkuName": {
+      "value": "S0"
+    },
+    "chatGptDeploymentName": {
+      "value": "chat"
+    }
+  }
+}
