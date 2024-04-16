@@ -16,4 +16,3 @@ Werkzeug==2.3.7
 zipp==3.16.2
 spacy
 applicationinsights
-gunicorn==20.1.0
